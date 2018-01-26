@@ -14,6 +14,7 @@ ARG BUILD_ID=""
 
 # Set ENV vars
 ENV HOME /tmp
+ENV BUILD_ID ${BUILD_ID:-'no args!'}
 ENV ZEPPELIN_VERSION ${ZEPPELIN_VERSION:-0.7.3}
 ENV ZEPPELIN_PORT ${ZEPPELIN_PORT:-8080}
 ENV ZEPPELIN_NOTEBOOK_DIR ${ZEPPELIN_NOTEBOOK_DIR:-notebook}
@@ -22,7 +23,7 @@ ENV ZEPPELIN_JAVA_OPTS ${ZEPPELIN_JAVA_OPTS:-""}
 WORKDIR /opt
 
 # Install applications
-RUN apk --update add bash wget python python-dev py-pip build-base && \
+RUN apk --update add bash wget python python-dev build-base py-boto3 py-pip && \
     echo "Downloading Apache Zeplin Version $ZEPPELIN_VERSION" && \
     wget http://apache.mirror.anlx.net/zeppelin/zeppelin-$ZEPPELIN_VERSION/zeppelin-$ZEPPELIN_VERSION-bin-all.tgz && \
     tar xvf zeppelin-$ZEPPELIN_VERSION-bin-all.tgz && \
